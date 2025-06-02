@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prediction Results - FraudDetector</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: -1;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .table-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .table th {
+            background: #1e40af;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+        .table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+        .table tr:hover {
+            background: #f3f4f6;
+        }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+    <!-- Navbar -->
+    <nav class="glass shadow-md p-4 flex justify-between items-center rounded-b-2xl mx-4 mt-4">
+        <div class="text-2xl font-bold text-white">FraudDetector</div>
+        <div class="flex gap-4">
+            <a href="/" class="text-white/80 hover:text-white">Home</a>
+            <a href="/upload" class="text-white/80 hover:text-white">Upload</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <div class="max-w-6xl mx-auto">
+            <!-- Results Summary -->
+            <div class="glass shadow-xl rounded-2xl p-8 mb-8">
+                <h1 class="text-3xl font-bold mb-6">Analysis Results</h1>
+                
+                <!-- Stats Grid -->
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <div class="stat-card">
+                        <div class="text-4xl mb-2">📊</div>
+                        <h3 class="text-xl font-semibold mb-1">Total Transactions</h3>
+                        <p class="text-3xl font-bold text-cyan-300">{{ total }}</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="text-4xl mb-2">⚠️</div>
+                        <h3 class="text-xl font-semibold mb-1">Fraudulent Detected</h3>
+                        <p class="text-3xl font-bold text-red-400">{{ fraud_count }}</p>
+                    </div>
+                </div>
+
+                {% if fraud_count > 0 %}
+                    <!-- Fraud Details -->
+                    <div class="space-y-4">
+                        <h2 class="text-2xl font-semibold">Fraudulent Transactions</h2>
+                        <div class="table-container">
+                            {{ fraud_cases|safe }}
+                        </div>
+                    </div>
+                {% else %}
+                    <!-- No Fraud Message -->
+                    <div class="text-center py-8">
+                        <div class="text-6xl mb-4">✅</div>
+                        <h2 class="text-2xl font-bold text-green-400 mb-2">No Fraud Detected</h2>
+                        <p class="text-white/70">All transactions in this dataset appear to be legitimate.</p>
+                    </div>
+                {% endif %}
+
+                <!-- Action Buttons -->
+                <div class="flex justify-center mt-8 gap-4">
+                    <a href="/upload" class="bg-gradient-to-r from-cyan-400 to-blue-500 text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 transition duration-300 shadow-lg flex items-center gap-2">
+                        <span>Analyze Another File</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                        </svg>
+                    </a>
+                    <a href="/" class="bg-white/10 text-white font-bold py-3 px-6 rounded-lg hover:bg-white/20 transition duration-300 flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                        </svg>
+                        <span>Back to Home</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass text-center p-4 shadow-inner text-sm text-white/70 rounded-t-2xl mx-4 mb-4">
+        &copy; 2025 FraudDetector Inc. All rights reserved.
+    </footer>
+</body>
+</html>

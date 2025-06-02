@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Data - Fraud Detection App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Upload Data</h1>
+        <form action="{{ url_for('train') }}" method="post" enctype="multipart/form-data">
+            <label for="file">Select CSV File:</label>
+            <input type="file" id="file" name="file" accept=".csv" required>
+            <br>
+            <label for="target_column">Target Column:</label>
+            <input type="text" id="target_column" name="target_column" value="Class" required>
+            <br>
+            <label for="n_estimators">Number of Estimators:</label>
+            <input type="number" id="n_estimators" name="n_estimators" value="100" required>
+            <br>
+            <button type="submit">Train Model</button>
+        </form>
+        <a href="{{ url_for('home') }}" class="button">Back to Home</a>
+    </div>
+</body>
+</html> 

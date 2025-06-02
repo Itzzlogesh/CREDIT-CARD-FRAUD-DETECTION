@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - FraudDetector</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: -1;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+    <!-- Navbar -->
+    <nav class="glass shadow-md p-4 flex justify-between items-center rounded-b-2xl mx-4 mt-4">
+        <div class="text-2xl font-bold text-white">FraudDetector</div>
+        <div class="flex gap-4">
+            <a href="/" class="text-white/80 hover:text-white">Home</a>
+            <a href="/upload" class="text-white/80 hover:text-white">Upload</a>
+            <a href="/about" class="text-white/80 hover:text-white">About</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            <!-- About Section -->
+            <div class="glass shadow-xl rounded-2xl p-8 mb-8">
+                <h1 class="text-3xl font-bold mb-6">About FraudDetector</h1>
+                
+                <div class="space-y-6">
+                    <!-- Project Overview -->
+                    <div>
+                        <h2 class="text-2xl font-semibold mb-3">Project Overview</h2>
+                        <p class="text-white/80 leading-relaxed">
+                            FraudDetector is an advanced machine learning-powered system designed to detect fraudulent credit card transactions in real-time. Our platform combines cutting-edge AI technology with user-friendly interfaces to provide reliable fraud detection services.
+                        </p>
+                    </div>
+
+                    <!-- Technology Stack -->
+                    <div>
+                        <h2 class="text-2xl font-semibold mb-3">Technology Stack</h2>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-white/10 rounded-lg p-4">
+                                <h3 class="font-semibold mb-2">Backend</h3>
+                                <ul class="list-disc list-inside text-white/80 space-y-1">
+                                    <li>Python Flask Framework</li>
+                                    <li>Scikit-learn ML Library</li>
+                                    <li>Pandas Data Processing</li>
+                                    <li>Random Forest Algorithm</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white/10 rounded-lg p-4">
+                                <h3 class="font-semibold mb-2">Frontend</h3>
+                                <ul class="list-disc list-inside text-white/80 space-y-1">
+                                    <li>HTML5 & TailwindCSS</li>
+                                    <li>Responsive Design</li>
+                                    <li>Interactive UI</li>
+                                    <li>Real-time Updates</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Key Features -->
+                    <div>
+                        <h2 class="text-2xl font-semibold mb-3">Key Features</h2>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <div class="bg-white/10 rounded-lg p-4 text-center">
+                                <div class="text-3xl mb-2">🔍</div>
+                                <h3 class="font-semibold mb-1">Real-time Detection</h3>
+                                <p class="text-white/80 text-sm">Instant fraud analysis on transaction data</p>
+                            </div>
+                            <div class="bg-white/10 rounded-lg p-4 text-center">
+                                <div class="text-3xl mb-2">📊</div>
+                                <h3 class="font-semibold mb-1">Detailed Analytics</h3>
+                                <p class="text-white/80 text-sm">Comprehensive transaction insights</p>
+                            </div>
+                            <div class="bg-white/10 rounded-lg p-4 text-center">
+                                <div class="text-3xl mb-2">🛡️</div>
+                                <h3 class="font-semibold mb-1">Secure Processing</h3>
+                                <p class="text-white/80 text-sm">Enhanced data security measures</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div>
+                        <h2 class="text-2xl font-semibold mb-3">Contact Us</h2>
+                        <p class="text-white/80 leading-relaxed">
+                            For any inquiries or support, please contact our team at:
+                            <a href="mailto:support@frauddetector.com" class="text-cyan-300 hover:underline">support@frauddetector.com</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass text-center p-4 shadow-inner text-sm text-white/70 rounded-t-2xl mx-4 mb-4">
+        &copy; 2025 FraudDetector Inc. All rights reserved.
+    </footer>
+</body>
+</html>

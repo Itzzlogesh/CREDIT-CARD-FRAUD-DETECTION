@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Success - Credit Card Fraud Detection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: -1;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+    <!-- Navbar -->
+    <nav class="glass shadow-md p-4 flex justify-between items-center rounded-b-2xl mx-4 mt-4">
+        <div class="text-2xl font-bold text-white">FraudDetector</div>
+        <div class="flex gap-4">
+            <a href="/" class="text-white/80 hover:text-white">Home</a>
+            <a href="/upload" class="text-white/80 hover:text-white">Upload</a>
+            <a href="/about" class="text-white/80 hover:text-white">About</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <div class="max-w-3xl mx-auto">
+            <!-- Success Section -->
+            <div class="glass shadow-xl rounded-2xl p-8 mb-8 text-center">
+                <div class="text-6xl mb-6">✅</div>
+                <h1 class="text-3xl font-bold mb-4">Model Trained Successfully!</h1>
+                <p class="text-white/80 mb-8">Your fraud detection model has been trained and is ready to use.</p>
+                
+                <div class="flex justify-center gap-4">
+                    <a href="/upload" class="bg-gradient-to-r from-cyan-400 to-blue-500 text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 transition duration-300 shadow-lg">
+                        Analyze Data Now
+                    </a>
+                    <a href="/" class="bg-white/10 text-white font-bold py-3 px-6 rounded-lg hover:bg-white/20 transition duration-300">
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass text-center p-4 shadow-inner text-sm text-white/70 rounded-t-2xl mx-4 mb-4">
+        &copy; 2025 FraudDetector Inc. All rights reserved.
+    </footer>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload - Credit Card Fraud Detection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: -1;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .upload-zone {
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        .upload-zone:hover {
+            border-color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .file-input {
+            opacity: 0;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        .progress-bar {
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(to right, #4ade80, #2dd4bf);
+            transition: width 0.3s ease;
+        }
+        .tab-active {
+            background: rgba(255, 255, 255, 0.2);
+            border-bottom: 2px solid white;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+    <!-- Navbar -->
+    <nav class="glass shadow-md p-4 flex justify-between items-center rounded-b-2xl mx-4 mt-4">
+        <div class="text-2xl font-bold text-white">FraudDetector</div>
+        <div class="flex gap-4">
+            <a href="/" class="text-white/80 hover:text-white">Home</a>
+            <a href="/upload" class="text-white/80 hover:text-white">Upload</a>
+            <a href="/about" class="text-white/80 hover:text-white">About</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <div class="max-w-3xl mx-auto">
+            <!-- Upload Section -->
+            <div class="glass shadow-xl rounded-2xl p-8 mb-8">
+                <h1 class="text-3xl font-bold mb-6 text-center">Upload Your Transaction Data</h1>
+                
+                <!-- Tabs -->
+                <div class="flex mb-6">
+                    <button id="analyze-tab" class="flex-1 py-2 px-4 tab-active" onclick="switchTab('analyze')">
+                        Analyze Data
+                    </button>
+                    <button id="train-tab" class="flex-1 py-2 px-4" onclick="switchTab('train')">
+                        Train New Model
+                    </button>
+                </div>
+                
+                <!-- Analyze Form -->
+                <form id="analyze-form" action="/predict" method="post" enctype="multipart/form-data" class="space-y-6">
+                    <!-- Upload Zone -->
+                    <div class="upload-zone rounded-lg p-8 text-center relative">
+                        <input type="file" name="file" accept=".csv" class="file-input" id="analyzeFileInput" required>
+                        <div class="space-y-4">
+                            <div class="text-5xl mb-4">📄</div>
+                            <h3 class="text-xl font-semibold">Drag & Drop your CSV file here</h3>
+                            <p class="text-white/70">or click to browse</p>
+                            <div id="analyzeFileName" class="text-sm text-cyan-300 hidden"></div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="h-1 bg-white/10 rounded-full overflow-hidden">
+                        <div class="progress-bar rounded-full" id="analyzeProgressBar"></div>
+                    </div>
+
+                    <!-- Requirements -->
+                    <div class="bg-white/10 rounded-lg p-4">
+                        <h4 class="font-semibold mb-2">File Requirements:</h4>
+                        <ul class="list-disc list-inside text-sm space-y-1 text-white/70">
+                            <li>CSV format only</li>
+                            <li>Must contain required transaction columns</li>
+                            <li>Maximum file size: 10MB</li>
+                        </ul>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="w-full bg-gradient-to-r from-cyan-400 to-blue-500 text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 transition duration-300 shadow-lg flex items-center justify-center gap-2">
+                        <span>Analyze Transactions</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                </form>
+                
+                <!-- Train Form -->
+                <form id="train-form" action="/train" method="post" enctype="multipart/form-data" class="space-y-6 hidden">
+                    <!-- Upload Zone -->
+                    <div class="upload-zone rounded-lg p-8 text-center relative">
+                        <input type="file" name="file" accept=".csv" class="file-input" id="trainFileInput" required>
+                        <div class="space-y-4">
+                            <div class="text-5xl mb-4">📊</div>
+                            <h3 class="text-xl font-semibold">Upload Training Dataset</h3>
+                            <p class="text-white/70">CSV file with labeled data</p>
+                            <div id="trainFileName" class="text-sm text-cyan-300 hidden"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Model Parameters -->
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Target Column Name</label>
+                            <input type="text" name="target_column" value="Class" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-400">
+                            <p class="text-xs text-white/60 mt-1">Column that indicates fraud (1) or legitimate (0)</p>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Number of Trees</label>
+                            <input type="number" name="n_estimators" value="100" min="10" max="1000" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-400">
+                            <p class="text-xs text-white/60 mt-1">More trees = better accuracy but slower training</p>
+                        </div>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="h-1 bg-white/10 rounded-full overflow-hidden">
+                        <div class="progress-bar rounded-full" id="trainProgressBar"></div>
+                    </div>
+
+                    <!-- Requirements -->
+                    <div class="bg-white/10 rounded-lg p-4">
+                        <h4 class="font-semibold mb-2">Training Data Requirements:</h4>
+                        <ul class="list-disc list-inside text-sm space-y-1 text-white/70">
+                            <li>CSV format with header row</li>
+                            <li>Must contain a target column (default: "Class")</li>
+                            <li>Target values should be binary (0/1)</li>
+                        </ul>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 transition duration-300 shadow-lg flex items-center justify-center gap-2">
+                        <span>Train New Model</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass text-center p-4 shadow-inner text-sm text-white/70 rounded-t-2xl mx-4 mb-4">
+        &copy; 2025 FraudDetector Inc. All rights reserved.
+    </footer>
+
+    <script>
+        // File input handling for analyze form
+        const analyzeFileInput = document.getElementById('analyzeFileInput');
+        const analyzeFileName = document.getElementById('analyzeFileName');
+        const analyzeProgressBar = document.getElementById('analyzeProgressBar');
+        
+        analyzeFileInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                analyzeFileName.textContent = this.files[0].name;
+                analyzeFileName.classList.remove('hidden');
+                
+                // Simulate upload progress
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 5;
+                    analyzeProgressBar.style.width = `${progress}%`;
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                    }
+                }, 50);
+            }
+        });
+        
+        // File input handling for train form
+        const trainFileInput = document.getElementById('trainFileInput');
+        const trainFileName = document.getElementById('trainFileName');
+        const trainProgressBar = document.getElementById('trainProgressBar');
+        
+        trainFileInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                trainFileName.textContent = this.files[0].name;
+                trainFileName.classList.remove('hidden');
+                
+                // Simulate upload progress
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 5;
+                    trainProgressBar.style.width = `${progress}%`;
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                    }
+                }, 50);
+            }
+        });
+        
+        // Tab switching
+        function switchTab(tab) {
+            const analyzeTab = document.getElementById('analyze-tab');
+            const trainTab = document.getElementById('train-tab');
+            const analyzeForm = document.getElementById('analyze-form');
+            const trainForm = document.getElementById('train-form');
+            
+            if (tab === 'analyze') {
+                analyzeTab.classList.add('tab-active');
+                trainTab.classList.remove('tab-active');
+                analyzeForm.classList.remove('hidden');
+                trainForm.classList.add('hidden');
+            } else {
+                analyzeTab.classList.remove('tab-active');
+                trainTab.classList.add('tab-active');
+                analyzeForm.classList.add('hidden');
+                trainForm.classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>

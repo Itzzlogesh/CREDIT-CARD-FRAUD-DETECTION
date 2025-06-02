@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Card Fraud Detection Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: -1;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-card {
+            background: rgba(0, 224, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .hero-image {
+            background: url('https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=1200&q=80') center/cover;
+            height: 400px;
+            border-radius: 1rem;
+            position: relative;
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 1rem;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col text-white">
+
+    <!-- Navbar -->
+    <nav class="glass shadow-md p-4 flex justify-between items-center rounded-b-2xl mx-4 mt-4">
+        <div class="text-2xl font-bold text-white">FraudDetector</div>
+        <div class="flex gap-4">
+            <a href="/" class="text-white/80 hover:text-white">Home</a>
+            <a href="/upload" class="text-white/80 hover:text-white">Upload</a>
+            <a href="/about" class="text-white/80 hover:text-white">About</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <div class="glass shadow-xl rounded-2xl overflow-hidden mb-12">
+            <div class="hero-image">
+                <div class="hero-overlay flex items-center justify-center text-center p-8">
+                    <div>
+                        <h1 class="text-5xl font-bold mb-4">Secure Your Transactions</h1>
+                        <p class="text-xl text-white/80 mb-8">Advanced AI-Powered Credit Card Fraud Detection System</p>
+                        <a href="/upload" class="inline-block bg-gradient-to-r from-cyan-400 to-blue-500 text-white font-bold px-8 py-4 rounded-lg hover:opacity-90 transition duration-300 shadow-lg">
+                            Start Detection Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="grid md:grid-cols-3 gap-6 mb-12">
+            <div class="feature-card">
+                <div class="text-cyan-300 text-3xl mb-4">🔍</div>
+                <h3 class="text-xl font-semibold mb-2">Real-time Analysis</h3>
+                <p class="text-white/70">Instant fraud detection using advanced machine learning algorithms</p>
+            </div>
+            <div class="feature-card">
+                <div class="text-cyan-300 text-3xl mb-4">📊</div>
+                <h3 class="text-xl font-semibold mb-2">Detailed Reports</h3>
+                <p class="text-white/70">Comprehensive analysis with transaction-level insights</p>
+            </div>
+            <div class="feature-card">
+                <div class="text-cyan-300 text-3xl mb-4">🛡️</div>
+                <h3 class="text-xl font-semibold mb-2">Secure Processing</h3>
+                <p class="text-white/70">Your data is processed securely and never stored</p>
+            </div>
+        </div>
+
+        <!-- How It Works Section -->
+        <div class="glass shadow-xl rounded-2xl p-8 mb-12">
+            <h2 class="text-3xl font-bold mb-8 text-center">How It Works</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">1</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Upload Data</h3>
+                    <p class="text-white/70">Simply upload your CSV file containing transaction data</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">2</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">AI Analysis</h3>
+                    <p class="text-white/70">Our advanced AI model analyzes each transaction</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">3</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Get Results</h3>
+                    <p class="text-white/70">Receive detailed fraud detection results instantly</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Why Choose Us Section -->
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+            <div class="glass shadow-xl rounded-2xl p-8">
+                <h2 class="text-2xl font-bold mb-4">Why Choose Us?</h2>
+                <ul class="space-y-4">
+                    <li class="flex items-center gap-3">
+                        <span class="text-green-400">✓</span>
+                        <span>Advanced Machine Learning Technology</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-green-400">✓</span>
+                        <span>Fast and Accurate Results</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-green-400">✓</span>
+                        <span>Secure Data Processing</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="text-green-400">✓</span>
+                        <span>User-Friendly Interface</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="glass shadow-xl rounded-2xl p-8">
+                <h2 class="text-2xl font-bold mb-4">Get Started Now</h2>
+                <p class="text-white/70 mb-6">
+                    Protect your business from fraudulent transactions with our advanced detection system. Upload your transaction data and get instant results.
+                </p>
+                <a href="/upload" class="inline-block w-full bg-white text-indigo-700 font-bold py-3 rounded-lg hover:bg-gray-100 transition duration-300 text-center">
+                    Start Detection
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass text-center p-4 shadow-inner text-sm text-white/70 rounded-t-2xl mx-4 mb-4">
+        &copy; 2025 FraudDetector Inc. All rights reserved.
+    </footer>
+</body>
+</html>
